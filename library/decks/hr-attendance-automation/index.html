@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HR Attendance Automation</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+html,body{margin:0;background:#1d1a17;}
+a{color:#b8442f;}
+a:hover{color:#8a2f1f;}
+deck-stage:not(:defined){visibility:hidden}
+.ctl:hover{background:#b8442f !important;}
+</style>
+</head>
+<body>
+<!--
+  Ported from the Claude Design file "HR Attendance Automation.dc.html".
+  Markup is unchanged; the {{ bindings }} are driven by the plain script at the
+  bottom instead of the React design-component runtime, so the deck opens
+  straight from disk with no server or network.
+-->
+<deck-stage width="1920" height="1080" no-rail>
+
+<section data-label="Problem" data-speaker-notes="Every day, assistant managers and senior engineers open HROne, look up each team member by name and PIS ID, and type Present, WFH or Leave into a Google Sheet. HROne already holds this data. That is 15 to 25 minutes per manager per day." style="background:#efe6da url('assets/paper-cream.jpeg') center/cover;font-family:'Bricolage Grotesque',sans-serif;color:#2b2622;overflow:hidden;">
+  <div style="position:absolute;left:100px;top:80px;font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.08em;color:#5e554c;">HR DATA AUTOMATION · 01 PROBLEM</div>
+  <h1 style="position:absolute;left:100px;top:122px;margin:0;width:1400px;font-size:76px;line-height:1.02;font-weight:800;letter-spacing:-0.02em;text-wrap:pretty;">Managers re-type attendance that HROne already has</h1>
+
+  <div style="position:absolute;left:100px;top:360px;width:520px;height:420px;box-sizing:border-box;padding:30px 32px;background:#fbf8f3;box-shadow:0 10px 24px rgba(60,40,20,0.16);border-radius:6px;display:flex;flex-direction:column;gap:14px;">
+    <div style="font-size:40px;font-weight:800;">HROne</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#3f7d4e;">● attendance recorded</div>
+    <div style="height:2px;background:#e6ddd0;"></div>
+    <div style="font-size:26px;">Aarav Mehta · Present</div>
+    <div style="font-size:26px;">Priya Nair · WFH</div>
+    <div style="font-size:26px;">Rohan Gupta · Leave</div>
+  </div>
+
+  <div style="position:absolute;left:630px;top:480px;width:150px;display:flex;flex-direction:column;align-items:center;gap:0px;color:#b8442f;">
+    <div style="font-family:'Caveat',cursive;font-size:38px;font-weight:700;line-height:1;text-align:center;">retyped by hand</div>
+    <div style="font-family:'Caveat',cursive;font-size:110px;line-height:0.9;">→</div>
+  </div>
+
+  <div style="position:absolute;left:790px;top:360px;width:520px;height:420px;box-sizing:border-box;overflow:hidden;background:#ffffff;box-shadow:0 10px 24px rgba(60,40,20,0.16);border-radius:6px;">
+    <div style="padding:16px 24px;background:#e9efe7;font-family:'JetBrains Mono',monospace;font-size:24px;color:#2f5a38;">Team attendance (manual)</div>
+    <div style="display:grid;grid-template-columns:210px 120px 1fr;font-size:26px;">
+      <div style="padding:14px 24px;border-bottom:2px solid #eee;font-weight:600;">Name</div>
+      <div style="padding:14px 0;border-bottom:2px solid #eee;font-weight:600;">PIS ID</div>
+      <div style="padding:14px 0;border-bottom:2px solid #eee;font-weight:600;">Status</div>
+      <div style="padding:14px 24px;border-bottom:1px solid #eee;">Aarav Mehta</div>
+      <div style="padding:14px 0;border-bottom:1px solid #eee;font-family:'JetBrains Mono',monospace;font-size:24px;">104221</div>
+      <div style="padding:14px 0;border-bottom:1px solid #eee;">Present</div>
+      <div style="padding:14px 24px;border-bottom:1px solid #eee;">Priya Nair</div>
+      <div style="padding:14px 0;border-bottom:1px solid #eee;font-family:'JetBrains Mono',monospace;font-size:24px;">104238</div>
+      <div style="padding:14px 0;border-bottom:1px solid #eee;">WFH</div>
+      <div style="padding:14px 24px;border-bottom:1px solid #eee;">Rohan Gupta</div>
+      <div style="padding:14px 0;border-bottom:1px solid #eee;font-family:'JetBrains Mono',monospace;font-size:24px;">104252</div>
+      <div style="padding:10px 0;border-bottom:1px solid #eee;"><span style="display:inline-block;padding:2px 8px;outline:3px solid #3f7d4e;min-width:130px;"><span data-k="typed"></span><span data-k="caret" style="opacity:0;color:#3f7d4e;">|</span></span></div>
+      <div style="padding:14px 24px;color:#9a9087;">Sneha Iyer</div>
+      <div style="padding:14px 0;font-family:'JetBrains Mono',monospace;font-size:24px;color:#9a9087;">104267</div>
+      <div style="padding:14px 0;color:#9a9087;">…</div>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:100px;top:830px;width:1190px;display:grid;grid-template-columns:repeat(3,1fr);gap:36px;">
+    <div style="display:flex;gap:16px;align-items:baseline;"><span style="font-family:'Caveat',cursive;font-size:52px;font-weight:700;color:#b8442f;">1</span><span style="font-size:30px;line-height:1.25;">Open HROne for each team member</span></div>
+    <div style="display:flex;gap:16px;align-items:baseline;"><span style="font-family:'Caveat',cursive;font-size:52px;font-weight:700;color:#b8442f;">2</span><span style="font-size:30px;line-height:1.25;">Match name and PIS ID in the sheet</span></div>
+    <div style="display:flex;gap:16px;align-items:baseline;"><span style="font-family:'Caveat',cursive;font-size:52px;font-weight:700;color:#b8442f;">3</span><span style="font-size:30px;line-height:1.25;">Type Present, WFH or Leave</span></div>
+  </div>
+
+  <div style="position:absolute;left:1400px;top:370px;width:420px;display:flex;flex-direction:column;gap:12px;">
+    <div style="font-size:170px;font-weight:800;line-height:0.9;letter-spacing:-0.04em;color:#b8442f;">15–25</div>
+    <div style="font-size:36px;line-height:1.2;">minutes per manager, every working day</div>
+    <div style="height:3px;background:#2b2622;margin:30px 0 18px;width:120px;"></div>
+    <div style="font-size:72px;font-weight:800;line-height:1;">5.5–9 hrs</div>
+    <div style="font-size:28px;line-height:1.3;color:#5e554c;">per manager, per month (22 working days)</div>
+    <div style="font-family:'Caveat',cursive;font-size:40px;color:#b8442f;margin-top:26px;transform:rotate(-2deg);">…for data that already exists</div>
+  </div>
+</section>
+
+<section data-label="Solution" data-speaker-notes="A Google Apps Script, written in JavaScript, calls the HROne attendance API and writes the result into the sheet. We run the setup once to install a time-driven trigger. After that the trigger fires every day by itself: it calls HROne, pulls the records, and places them in the right rows. Nobody has to open the sheet." style="background:#f3f1ec url('assets/paper-white.jpeg') center/cover;font-family:'Bricolage Grotesque',sans-serif;color:#2b2622;overflow:hidden;">
+  <div style="position:absolute;left:100px;top:80px;font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.08em;color:#5e554c;">HR DATA AUTOMATION · 02 SOLUTION</div>
+  <h1 style="position:absolute;left:100px;top:122px;margin:0;width:1720px;font-size:64px;line-height:1.05;font-weight:800;letter-spacing:-0.02em;">Apps Script syncs HROne attendance into the sheet</h1>
+
+  <div style="position:absolute;left:100px;top:270px;font-family:'Caveat',cursive;font-size:40px;font-weight:700;color:#b8442f;">set up once ↓</div>
+  <div style="position:absolute;left:100px;top:320px;width:680px;height:530px;background:#26221f;border-radius:10px;box-shadow:0 14px 30px rgba(0,0,0,0.22);overflow:hidden;font-family:'JetBrains Mono',monospace;font-size:24px;line-height:1.38;color:#e9e2d6;">
+    <div style="padding:12px 24px;background:#36312c;color:#b9ae9f;display:flex;justify-content:space-between;"><span>sync.gs · Apps Script</span><span>JavaScript</span></div>
+    <div style="padding:18px 24px;display:flex;flex-direction:column;">
+      <div style="white-space:pre;"><span style="color:#e6a86b;">function</span> syncAttendance() {</div>
+      <div style="white-space:pre;">  <span style="color:#e6a86b;">const</span> key = getSecret(<span style="color:#9fcf8f;">'HRONE_KEY'</span>);</div>
+      <div style="white-space:pre;">  <span style="color:#e6a86b;">const</span> res = UrlFetchApp.fetch(</div>
+      <div style="white-space:pre;">    HRONE + <span style="color:#9fcf8f;">'/attendance?date='</span> + today,</div>
+      <div style="white-space:pre;">    { headers: { Authorization: key } });</div>
+      <div style="white-space:pre;">  writeToSheet(JSON.parse(res));</div>
+      <div style="white-space:pre;">}</div>
+      <div style="white-space:pre;color:#8f8578;">// one-time: install the trigger</div>
+      <div style="white-space:pre;">ScriptApp.newTrigger(<span style="color:#9fcf8f;">'syncAttendance'</span>)</div>
+      <div style="white-space:pre;">  .timeBased().everyDays(1)</div>
+      <div style="white-space:pre;">  .atHour(10).create();</div>
+    </div>
+  </div>
+  <div data-k="btn" style="position:absolute;left:124px;top:770px;height:60px;padding:0 28px;border-radius:8px;display:flex;align-items:center;font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:600;color:#ffffff;background:#b8442f;transition:all .25s;">▶ Run setup</div>
+
+  <div data-k="trig" style="position:absolute;left:100px;top:866px;width:680px;padding:22px 28px;box-sizing:border-box;background:#fffdf8;border:3px solid #d9cdbb;border-radius:10px;display:flex;justify-content:space-between;align-items:center;transition:border-color .4s;">
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <span style="font-size:30px;font-weight:600;">Time-driven trigger</span>
+      <span style="font-size:26px;color:#5e554c;">Every day, 10:00 AM · runs in background</span>
+    </div>
+    <span data-k="trigLabel" style="font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:600;color:#8f8578;">not installed</span>
+  </div>
+
+  <div style="position:absolute;left:830px;top:300px;width:990px;height:110px;">
+    <div style="position:absolute;left:140px;right:140px;top:54px;border-top:3px dashed #9a9087;"></div>
+    <div data-k="packet" style="position:absolute;top:44px;left:129px;width:22px;height:22px;border-radius:50%;background:#b8442f;box-shadow:0 0 0 6px rgba(184,68,47,0.2);opacity:0;transition:left .5s ease-in-out, opacity .3s;"></div>
+    <div style="position:absolute;inset:0;display:flex;justify-content:space-between;">
+      <div data-k="n1" style="width:280px;padding:14px 18px;box-sizing:border-box;border-radius:10px;background:#fffdf8;border:2px solid #2b2622;display:flex;flex-direction:column;gap:2px;transition:background .3s;"><span style="font-size:28px;font-weight:600;">Trigger fires</span><span style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#5e554c;"><span data-k="dayLabel"></span> 10:00</span></div>
+      <div data-k="n2" style="width:280px;padding:14px 18px;box-sizing:border-box;border-radius:10px;background:#fffdf8;border:2px solid #2b2622;display:flex;flex-direction:column;gap:2px;transition:background .3s;"><span style="font-size:28px;font-weight:600;">HROne API</span><span data-k="apiLabel" style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#5e554c;">GET /attendance</span></div>
+      <div data-k="n3" style="width:280px;padding:14px 18px;box-sizing:border-box;border-radius:10px;background:#fffdf8;border:2px solid #2b2622;display:flex;flex-direction:column;gap:2px;transition:background .3s;"><span style="font-size:28px;font-weight:600;">Google Sheet</span><span data-k="sheetLabel" style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#5e554c;">waiting</span></div>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:830px;top:440px;width:990px;height:560px;background:#ffffff;border-radius:12px;box-shadow:0 14px 30px rgba(60,40,20,0.18);overflow:hidden;">
+    <div style="padding:22px 30px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #efebe4;">
+      <div style="display:flex;flex-direction:column;gap:2px;"><span style="font-size:34px;font-weight:800;">Team attendance</span><span data-k="dateLabel" style="font-size:24px;color:#5e554c;"></span></div>
+      <span data-k="sync" style="padding:8px 18px;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:24px;background:#f3efe8;color:#5e554c;">Waiting for trigger</span>
+    </div>
+    <div style="padding:16px 30px;display:flex;gap:16px;">
+      <span style="padding:6px 18px;border-radius:8px;background:#dcebd9;color:#2a5e36;font-size:26px;font-weight:600;">Present <span data-k="cP">0</span></span>
+      <span style="padding:6px 18px;border-radius:8px;background:#dbe4f3;color:#2a4c84;font-size:26px;font-weight:600;">WFH <span data-k="cW">0</span></span>
+      <span style="padding:6px 18px;border-radius:8px;background:#f6e2c8;color:#7f5214;font-size:26px;font-weight:600;">Leave <span data-k="cL">0</span></span>
+    </div>
+    <div style="display:grid;grid-template-columns:420px 240px 1fr;padding:0 30px;font-size:24px;color:#5e554c;font-family:'JetBrains Mono',monospace;border-bottom:2px solid #efebe4;">
+      <div style="padding:10px 0;">NAME</div><div style="padding:10px 0;">PIS ID</div><div style="padding:10px 0;">STATUS</div>
+    </div>
+    <div data-k="rows"></div>
+  </div>
+
+  <div style="position:absolute;left:0;top:0;width:0;height:0;">
+    <div data-k="ripple" style="position:absolute;left:250px;top:800px;width:80px;height:80px;margin:-40px 0 0 -40px;border-radius:50%;border:4px solid #b8442f;opacity:0;transform:scale(0.3);transition:transform .5s, opacity .5s;"></div>
+    <svg data-k="cursor" width="44" height="52" viewBox="0 0 22 26" style="position:absolute;left:1300px;top:960px;opacity:0;transition:left 1s cubic-bezier(.5,0,.2,1), top 1s cubic-bezier(.5,0,.2,1), opacity .4s;filter:drop-shadow(0 3px 4px rgba(0,0,0,.3));"><polygon points="1,1 1,21 6,16 10,25 14,23 10,15 17,15" fill="#ffffff" stroke="#1d1a17" stroke-width="1.6" stroke-linejoin="round"></polygon></svg>
+  </div>
+</section>
+
+<section data-label="Scope &amp; Security" data-speaker-notes="We do not need access to all of HROne. Only a read-only key for the attendance log. Payroll, personal records and documents remain outside the script's reach, and any call to them is rejected. The key sits in Script Properties, the data stays in our Google Workspace, and HROne can revoke the key at any time." style="background:#e7d7b4 url('assets/sunburst.jpeg') center/cover;font-family:'Bricolage Grotesque',sans-serif;color:#2b2622;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:rgba(246,238,222,0.62);"></div>
+  <div style="position:absolute;left:100px;top:80px;font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.08em;color:#4d453d;">HR DATA AUTOMATION · 03 SCOPE &amp; SECURITY</div>
+  <h1 style="position:absolute;left:100px;top:122px;margin:0;width:1720px;font-size:64px;line-height:1.05;font-weight:800;letter-spacing:-0.02em;">Access needed: one read-only HROne endpoint</h1>
+
+  <div style="position:absolute;left:100px;top:290px;width:900px;display:flex;flex-direction:column;gap:22px;">
+    <div style="display:flex;align-items:center;gap:18px;">
+      <span style="padding:10px 20px;border-radius:8px;background:#26221f;color:#f3ece0;font-family:'JetBrains Mono',monospace;font-size:24px;">Apps Script</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#4d453d;">requests →</span>
+    </div>
+    <div data-k="modules" style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;">
+      <div style="height:190px;padding:22px;box-sizing:border-box;border-radius:12px;background:#ffffff;border:4px solid #3f7d4e;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 10px 22px rgba(63,125,78,0.22);">
+        <span style="font-size:32px;font-weight:800;">Attendance log</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#2a5e36;">200 OK · read-only</span>
+      </div>
+    </div>
+    <div style="font-family:'Caveat',cursive;font-size:44px;font-weight:700;color:#8a2f1f;transform:rotate(-1deg);margin-top:16px;">Only attendance is in scope. Everything else stays closed.</div>
+  </div>
+
+  <div style="position:absolute;left:1080px;top:270px;width:740px;height:740px;background:url('assets/burlap.jpeg') center/100% 100%;box-shadow:0 14px 30px rgba(60,40,20,0.3);">
+    <div style="position:absolute;left:56px;top:64px;right:56px;bottom:64px;background:#fbf7ef url('assets/paper-cream.jpeg') center/cover;transform:rotate(-1.5deg);box-shadow:0 8px 18px rgba(0,0,0,0.25);padding:48px 46px;box-sizing:border-box;display:flex;flex-direction:column;gap:22px;">
+      <div style="position:absolute;top:-22px;left:50%;width:170px;height:46px;margin-left:-85px;background:rgba(236,224,196,0.85);transform:rotate(3deg);box-shadow:0 2px 4px rgba(0,0,0,0.12);"></div>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.08em;color:#8a2f1f;">THE ASK</span>
+      <span style="font-size:40px;font-weight:800;line-height:1.12;">A read-only API key for the HROne attendance log</span>
+      <div style="height:2px;background:#d9cdbb;"></div>
+      <div style="display:flex;gap:14px;font-size:28px;line-height:1.3;"><span style="color:#3f7d4e;font-weight:800;">✓</span><span>Cannot edit or delete HROne data</span></div>
+      <div style="display:flex;gap:14px;font-size:28px;line-height:1.3;"><span style="color:#3f7d4e;font-weight:800;">✓</span><span>Key kept in Script Properties, not in the sheet</span></div>
+      <div style="display:flex;gap:14px;font-size:28px;line-height:1.3;"><span style="color:#3f7d4e;font-weight:800;">✓</span><span>Data stays inside our Google Workspace</span></div>
+      <div style="display:flex;gap:14px;font-size:28px;line-height:1.3;"><span style="color:#3f7d4e;font-weight:800;">✓</span><span>HROne admin can revoke the key anytime</span></div>
+    </div>
+  </div>
+</section>
+
+<section data-label="Impact" data-speaker-notes="Example: the electrical team has 20 managerial engineers. At 20 minutes each per day, that is about 6.7 hours a day, roughly 147 hours a month and 1,760 hours a year handed back. Use the controls to change team size and minutes." style="background:#efe6da url('assets/paper-cream.jpeg') center/cover;font-family:'Bricolage Grotesque',sans-serif;color:#2b2622;overflow:hidden;">
+  <div style="position:absolute;left:100px;top:80px;font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:0.08em;color:#5e554c;">HR DATA AUTOMATION · 04 IMPACT</div>
+  <h1 style="position:absolute;left:100px;top:122px;margin:0;width:1720px;font-size:64px;line-height:1.05;font-weight:800;letter-spacing:-0.02em;">Hours returned to the electrical team</h1>
+
+  <div style="position:absolute;left:100px;top:270px;width:820px;display:flex;gap:40px;align-items:flex-end;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#5e554c;">MANAGERIAL ENGINEERS</span>
+      <div style="display:flex;align-self:flex-start;align-items:center;gap:0px;background:#ffffff;border:2px solid #2b2622;border-radius:10px;overflow:hidden;">
+        <button class="ctl" data-k="decM" aria-label="Fewer managers" style="width:64px;height:64px;border:none;background:#2b2622;color:#ffffff;font-size:36px;cursor:pointer;font-family:inherit;">−</button>
+        <span data-k="managers" style="width:100px;text-align:center;font-size:40px;font-weight:800;">20</span>
+        <button class="ctl" data-k="incM" aria-label="More managers" style="width:64px;height:64px;border:none;background:#2b2622;color:#ffffff;font-size:36px;cursor:pointer;font-family:inherit;">+</button>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#5e554c;">MINUTES PER DAY, EACH</span>
+      <div data-k="minOpts" style="display:flex;border:2px solid #2b2622;border-radius:10px;overflow:hidden;">
+        <button data-min="15" style="width:96px;height:64px;border:none;background:#ffffff;color:#2b2622;font-size:32px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s;">15</button>
+        <button data-min="20" style="width:96px;height:64px;border:none;background:#ffffff;color:#2b2622;font-size:32px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s;">20</button>
+        <button data-min="25" style="width:96px;height:64px;border:none;background:#ffffff;color:#2b2622;font-size:32px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .2s;">25</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:100px;top:420px;width:820px;display:flex;flex-direction:column;gap:22px;">
+    <div style="background:#fbf8f3;border-radius:8px;box-shadow:0 8px 20px rgba(60,40,20,0.14);padding:24px 34px;display:grid;grid-template-columns:200px 1fr;align-items:center;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:26px;color:#5e554c;">DAILY</span>
+      <div style="display:flex;align-items:baseline;gap:14px;"><span data-k="dDay" style="font-size:84px;font-weight:800;line-height:1;letter-spacing:-0.03em;">0.0</span><span style="font-size:32px;">hrs</span></div>
+    </div>
+    <div style="background:#fbf8f3;border-radius:8px;box-shadow:0 8px 20px rgba(60,40,20,0.14);padding:24px 34px;display:grid;grid-template-columns:200px 1fr;align-items:center;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:26px;color:#5e554c;">MONTHLY</span>
+      <div style="display:flex;align-items:baseline;gap:14px;"><span data-k="dMonth" style="font-size:84px;font-weight:800;line-height:1;letter-spacing:-0.03em;">0</span><span style="font-size:32px;">hrs · 22 working days</span></div>
+    </div>
+    <div style="background:#2b2622;color:#f6efe3;border-radius:8px;box-shadow:0 8px 20px rgba(60,40,20,0.2);padding:24px 34px;display:grid;grid-template-columns:170px 1fr;align-items:center;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:26px;color:#d9cdbb;">ANNUAL</span>
+      <div style="display:flex;align-items:baseline;gap:14px;"><span data-k="dYear" style="font-size:96px;font-weight:800;line-height:1;letter-spacing:-0.03em;color:#f0b38a;">0</span><span style="font-size:30px;white-space:nowrap;">hrs · 264 working days</span></div>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:1000px;top:270px;width:820px;height:740px;background:url('assets/burlap.jpeg') center/100% 100%;box-shadow:0 14px 30px rgba(60,40,20,0.3);">
+    <div style="position:absolute;left:48px;top:52px;right:48px;bottom:52px;background:#fbf8f3;box-shadow:0 8px 18px rgba(0,0,0,0.22);padding:36px 40px;box-sizing:border-box;display:flex;flex-direction:column;gap:18px;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;">
+        <span style="font-size:34px;font-weight:800;">Working days back per year</span>
+        <span data-k="dDays" style="font-size:56px;font-weight:800;color:#b8442f;">0</span>
+      </div>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:24px;color:#5e554c;">1 square = one 8-hour day</span>
+      <div data-k="squares" style="display:grid;grid-template-columns:repeat(30,16px);gap:4px;align-content:start;flex:1;"></div>
+      <span style="font-family:'Caveat',cursive;font-size:44px;font-weight:700;color:#8a2f1f;line-height:1.05;">≈ <span data-k="fte">0.83</span> of a full-time engineer, every year</span>
+    </div>
+  </div>
+</section>
+
+</deck-stage>
+<script src="deck-stage.js"></script>
+<script>
+// Slide animation + calculator logic, ported line-for-line from the design
+// file's DCLogic component. render() computes the same values the template
+// bindings used and writes them onto the [data-k] elements.
+(() => {
+  const deck = document.querySelector('deck-stage');
+  const $ = k => deck.querySelector('[data-k="' + k + '"]');
+  const state = { tick: 0, cycle: 0, n: 0, managers: 20, mins: 20 };
+  let tw = { t0: 0, from: { day: 0, month: 0, year: 0, days: 0 } }, cur = null, raf = 0;
+
+  const calc = (m, x) => { const day = m * x / 60; return { day, month: day * 22, year: day * 264, days: day * 264 / 8 }; };
+
+  // Static scaffolding for the repeated template blocks.
+  const people = [['Aarav Mehta','104221'],['Priya Nair','104238'],['Rohan Gupta','104252'],['Sneha Iyer','104267'],['Karan Singh','104281']];
+  const rowsEl = $('rows');
+  const rowEls = people.map(() => {
+    const r = document.createElement('div');
+    r.style.cssText = 'display:grid;grid-template-columns:420px 240px 1fr;padding:0 30px;height:56px;align-items:center;font-size:27px;border-bottom:1px solid #f2eee8;opacity:0;transform:translateX(-24px);transition:opacity .4s, transform .4s;';
+    r.innerHTML = '<div></div><div style="font-family:\'JetBrains Mono\',monospace;font-size:24px;"></div><div><span style="padding:4px 16px;border-radius:999px;font-size:24px;font-weight:600;"></span></div>';
+    rowsEl.appendChild(r);
+    return r;
+  });
+  const mods = ['Payroll', 'Salary & bank details', 'Personal records', 'Performance', 'Documents'];
+  const modEls = mods.map(m => {
+    const c = document.createElement('div');
+    c.style.cssText = 'height:190px;padding:22px;box-sizing:border-box;border-radius:12px;background:rgba(255,253,248,0.7);border:3px dashed #b3a894;display:flex;flex-direction:column;justify-content:space-between;transition:border-color .3s;';
+    c.innerHTML = '<span style="font-size:30px;font-weight:600;color:#5e554c;"></span><span style="font-family:\'JetBrains Mono\',monospace;font-size:24px;transition:color .3s;"></span>';
+    c.firstChild.textContent = m;
+    $('modules').appendChild(c);
+    return c;
+  });
+  const sqEl = $('squares');
+
+  function render() {
+    const { tick: p, cycle, n } = state;
+    // slide 1 typing
+    const words = ['Present', 'WFH', 'On leave'];
+    const per = words.map(w => w.length + 8), total = per.reduce((a, b) => a + b, 0);
+    let k = n % total, wi = 0; while (k >= per[wi]) { k -= per[wi]; wi++; }
+    $('typed').textContent = words[wi].slice(0, Math.min(k, words[wi].length));
+    $('caret').style.opacity = n % 2 ? 1 : 0;
+
+    // slide 2
+    const days = [['P','P','W','P','L','P'],['P','W','P','P','P','L'],['W','P','P','L','P','P']];
+    const st = { P: ['Present','#dcebd9','#2a5e36'], W: ['WFH','#dbe4f3','#2a4c84'], L: ['Leave','#f6e2c8','#7f5214'] };
+    const day = days[cycle % 3].slice(0, people.length);
+    people.forEach((pp, i) => {
+      const on = p >= 10 + i, s = st[day[i]], r = rowEls[i];
+      r.children[0].textContent = pp[0];
+      r.children[1].textContent = pp[1];
+      const pill = r.children[2].firstChild;
+      pill.textContent = s[0]; pill.style.background = s[1]; pill.style.color = s[2];
+      r.style.opacity = on ? 1 : 0;
+      r.style.transform = 'translateX(' + (on ? 0 : -24) + 'px)';
+    });
+    const shown = day.filter((_, i) => p >= 10 + i);
+    const cnt = c => shown.filter(x => x === c).length;
+    $('cP').textContent = cnt('P'); $('cW').textContent = cnt('W'); $('cL').textContent = cnt('L');
+    const d = new Date(2026, 9, 21 + cycle);
+    $('dateLabel').textContent = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+    $('dayLabel').textContent = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+    const setup = cycle === 0;
+    const installed = !setup || p >= 4;
+    const atBtn = setup && p >= 1;
+    const active = '#f4d9b0', idle = '#fffdf8';
+    const packetFrac = p <= 6 ? 0 : p <= 8 ? 0.5 : 1;
+
+    const cursor = $('cursor');
+    cursor.style.left = (atBtn ? 230 : 1300) + 'px';
+    cursor.style.top = (atBtn ? 794 : 960) + 'px';
+    cursor.style.opacity = setup && p < 6 ? 1 : 0;
+    const ripple = $('ripple'), press = setup && p === 3;
+    ripple.style.opacity = press ? 0.9 : 0;
+    ripple.style.transform = 'scale(' + (press ? 1.4 : 0.3) + ')';
+    const btn = $('btn');
+    btn.textContent = installed ? '✓ Trigger installed' : '▶ Run setup';
+    btn.style.background = installed ? '#3f7d4e' : '#b8442f';
+    btn.style.transform = 'scale(' + (press ? 0.94 : 1) + ')';
+    $('trig').style.borderColor = installed ? '#3f7d4e' : '#d9cdbb';
+    const trigLabel = $('trigLabel');
+    trigLabel.textContent = installed ? '● ACTIVE' : 'not installed';
+    trigLabel.style.color = installed ? '#2a5e36' : '#8f8578';
+    const packet = $('packet');
+    packet.style.left = (140 + packetFrac * 710 - 11) + 'px';
+    packet.style.opacity = p >= 6 && p <= 10 ? 1 : 0;
+    $('n1').style.background = p >= 6 && p <= 7 ? active : idle;
+    $('n2').style.background = p >= 7 && p <= 9 ? active : idle;
+    $('n3').style.background = p >= 9 ? active : idle;
+    $('apiLabel').textContent = p >= 8 ? '200 OK · 5 rows' : 'GET /attendance';
+    $('sheetLabel').textContent = p >= 16 ? 'rows written' : p >= 10 ? 'writing…' : 'waiting';
+    const sync = $('sync');
+    sync.textContent = p >= 16 ? 'Synced 10:00 · auto' : p >= 6 ? 'Syncing…' : 'Waiting for trigger';
+    sync.style.background = p >= 16 ? '#dcebd9' : '#f3efe8';
+    sync.style.color = p >= 16 ? '#2a5e36' : '#5e554c';
+
+    // slide 3
+    const hit = Math.floor(n / 3) % mods.length;
+    modEls.forEach((c, i) => {
+      const on = i === hit;
+      c.style.borderColor = on ? '#b8442f' : '#b3a894';
+      c.lastChild.textContent = on ? '403 · not in scope' : 'no access';
+      c.lastChild.style.color = on ? '#b8442f' : '#8f8578';
+    });
+
+    renderImpact();
+  }
+
+  // slide 4 — split out so the 1.2s count-up tween can redraw just this part.
+  function renderImpact() {
+    const { managers, mins } = state;
+    const tgt = calc(managers, mins);
+    const pr = Math.min(1, (performance.now() - tw.t0) / 1200), e = 1 - Math.pow(1 - pr, 3);
+    const lerp = kk => tw.from[kk] + (tgt[kk] - tw.from[kk]) * e;
+    cur = { day: lerp('day'), month: lerp('month'), year: lerp('year'), days: lerp('days') };
+    const totalSq = Math.round(tgt.days), filled = Math.round(cur.days);
+    const want = Math.max(totalSq, filled);
+    while (sqEl.children.length < want) {
+      const s = document.createElement('div');
+      s.style.cssText = 'width:16px;height:16px;border-radius:3px;';
+      sqEl.appendChild(s);
+    }
+    while (sqEl.children.length > want) sqEl.lastChild.remove();
+    for (let i = 0; i < want; i++) sqEl.children[i].style.background = i < filled ? (i % 22 === 21 ? '#8a2f1f' : '#b8442f') : '#eadfce';
+    const fmt = v => Math.round(v).toLocaleString('en-IN');
+    $('managers').textContent = managers;
+    $('dDay').textContent = cur.day.toFixed(1);
+    $('dMonth').textContent = fmt(cur.month);
+    $('dYear').textContent = fmt(cur.year);
+    $('dDays').textContent = fmt(cur.days);
+    $('fte').textContent = (tgt.year / (264 * 8)).toFixed(2);
+    $('minOpts').querySelectorAll('button').forEach(b => {
+      const on = +b.dataset.min === mins;
+      b.style.background = on ? '#b8442f' : '#ffffff';
+      b.style.color = on ? '#ffffff' : '#2b2622';
+    });
+  }
+
+  function change(patch) {
+    const from = cur || calc(state.managers, state.mins);
+    tw = { t0: performance.now(), from };
+    Object.assign(state, patch);
+    cancelAnimationFrame(raf);
+    const loop = () => { renderImpact(); if (performance.now() - tw.t0 < 1300) raf = requestAnimationFrame(loop); };
+    raf = requestAnimationFrame(loop);
+  }
+
+  const stop = ev => ev.stopPropagation();
+  $('decM').addEventListener('click', ev => { stop(ev); change({ managers: Math.max(5, state.managers - 1) }); });
+  $('incM').addEventListener('click', ev => { stop(ev); change({ managers: Math.min(40, state.managers + 1) }); });
+  $('minOpts').querySelectorAll('button').forEach(b => b.addEventListener('click', ev => { stop(ev); change({ mins: +b.dataset.min }); }));
+
+  render();
+  change({});
+  setInterval(() => {
+    let tick = state.tick + 1, cycle = state.cycle;
+    if (tick > 24) { tick = 5; cycle++; }
+    Object.assign(state, { tick, cycle, n: state.n + 1 });
+    render();
+  }, 550);
+})();
+</script>
+<script src="../../deck-bridge.js"></script>
+</body>
+</html>

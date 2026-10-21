@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pinnacle 360</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%235b2d90'/%3E%3Cpath d='M7 23 16 8l9 15' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linejoin='round' stroke-linecap='round'/%3E%3Cpath d='M12 23l4-6.5 4 6.5' fill='none' stroke='%23c9b4ec' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="assets/hub.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 20 20"><circle cx="8.5" cy="8.5" r="5.75" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m13 13 4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 16 16"><path d="m3.5 3.5 9 9m0-9-9 9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-play" viewBox="0 0 16 16"><path d="M4.5 2.8v10.4a.6.6 0 0 0 .9.5l8.2-5.2a.6.6 0 0 0 0-1L5.4 2.3a.6.6 0 0 0-.9.5Z" fill="currentColor"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 16 16"><path d="M9 2.75h4.25V7M13 3 7.5 8.5M11.5 9.5v3a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-info" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 7.2v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="8" cy="4.9" r=".95" fill="currentColor"/></symbol>
+  <symbol id="i-queue" viewBox="0 0 16 16"><path d="M2.5 4h7M2.5 8h7M2.5 12h4.5M12.5 9.5v5M10 12h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-queued" viewBox="0 0 16 16"><path d="M2.5 4h7M2.5 8h7M2.5 12h4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="m9.8 12 1.9 1.9L15 10.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 16 16"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 16 16"><rect x="2" y="2" width="5" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="2" width="5" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="2" y="9" width="5" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="9" y="9" width="5" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="i-list" viewBox="0 0 16 16"><path d="M2 3.5h12M2 8h12M2 12.5h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+  <symbol id="i-left" viewBox="0 0 16 16"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-right" viewBox="0 0 16 16"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-up" viewBox="0 0 16 16"><path d="m3.5 10 4.5-4.5 4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-down" viewBox="0 0 16 16"><path d="m3.5 6 4.5 4.5L12.5 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-full" viewBox="0 0 16 16"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-notes" viewBox="0 0 16 16"><rect x="2.5" y="2" width="11" height="12" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M5 5.5h6M5 8h6M5 10.5h3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 16 16"><rect x="5" y="5" width="8.5" height="8.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M11 3.5V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h.5" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 16 16"><path d="M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.6 8.6a1 1 0 0 0 1 .9h3.8a1 1 0 0 0 1-.9l.6-8.6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-all" viewBox="0 0 16 16"><path d="M2.5 3.5h11v9h-11z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M2.5 6.5h11M6.5 6.5v6" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="i-deck" viewBox="0 0 16 16"><rect x="1.75" y="3" width="12.5" height="8" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 11v2.5M5.5 13.5h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-mvp" viewBox="0 0 16 16"><rect x="1.75" y="2.5" width="12.5" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M1.75 5.5h12.5" stroke="currentColor" stroke-width="1.4"/><circle cx="3.9" cy="4" r=".6" fill="currentColor"/><circle cx="5.6" cy="4" r=".6" fill="currentColor"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 16 16"><path d="M4 1.75h5.5L12.5 4.8v9.45H4z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M6 8h4.5M6 10.5h4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+</svg>
+
+<header class="topbar">
+  <a class="brand" href="#" id="home" aria-label="Pinnacle 360, show everything">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#5b2d90"/><path d="M7 23 16 8l9 15" fill="none" stroke="#fff" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><path d="M12 23l4-6.5 4 6.5" fill="none" stroke="#c9b4ec" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>
+    <span class="brand-name">Pinnacle <span>360</span></span>
+  </a>
+  <div class="search" role="search">
+    <svg aria-hidden="true"><use href="#i-search"/></svg>
+    <input id="q" type="search" placeholder="Search decks, MVPs, problems, slide notes" autocomplete="off" spellcheck="false" aria-label="Search the library" aria-describedby="searchHint">
+    <span class="kbd" id="slashKey" aria-hidden="true">/</span>
+    <button class="clear" id="clearQ" type="button" aria-label="Clear search" hidden><svg><use href="#i-x"/></svg></button>
+    <span class="search-hint" id="searchHint" hidden>Enter opens the top result · Esc clears</span>
+  </div>
+  <div class="top-actions">
+    <button class="btn btn-line" id="runBtn" type="button">
+      <svg aria-hidden="true"><use href="#i-queue"/></svg><span class="lbl">Run-sheet</span>
+      <span class="count-pill" id="runCount" data-zero>0</span>
+    </button>
+    <button class="btn btn-primary" id="addBtn" type="button">
+      <svg aria-hidden="true"><use href="#i-plus"/></svg><span class="lbl">Add a link</span>
+    </button>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="side" aria-label="Library sections">
+    <div class="side-group">
+      <h2 class="side-title">Library</h2>
+      <ul id="kindNav"></ul>
+    </div>
+    <div class="side-group">
+      <h2 class="side-title">Problem spaces</h2>
+      <ul id="spaceNav"></ul>
+    </div>
+    <div class="side-group" id="recentGroup" hidden>
+      <h2 class="side-title">Recently opened</h2>
+      <ul id="recentNav"></ul>
+    </div>
+  </nav>
+
+  <main id="main">
+    <section class="hero" id="hero" aria-label="Next up" hidden></section>
+    <section aria-labelledby="registerTitle">
+      <div class="register-head">
+        <div>
+          <h1 class="register-title" id="registerTitle">Everything</h1>
+          <p class="register-sub" id="registerSub"></p>
+        </div>
+        <div class="register-tools">
+          <label class="sr-only" for="sort">Sort by</label>
+          <select class="select" id="sort">
+            <option value="updated">Recently updated</option>
+            <option value="sheet">Sheet number</option>
+            <option value="title">Title A–Z</option>
+          </select>
+          <div class="seg" role="group" aria-label="Layout">
+            <button type="button" id="viewGrid" aria-pressed="true" title="Sheets"><svg aria-hidden="true"><use href="#i-grid"/></svg><span class="sr-only">Sheets</span></button>
+            <button type="button" id="viewList" aria-pressed="false" title="Register table"><svg aria-hidden="true"><use href="#i-list"/></svg><span class="sr-only">Register table</span></button>
+          </div>
+        </div>
+      </div>
+      <div id="results"></div>
+    </section>
+  </main>
+</div>
+
+<!-- Presenter -->
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="vTitle" hidden>
+  <div class="v-bar">
+    <button class="v-btn" id="vClose" type="button" title="Back to library (Esc)"><svg aria-hidden="true"><use href="#i-left"/></svg><span class="lbl">Library</span><span class="k">Esc</span></button>
+    <div class="v-title"><span class="code" id="vCode"></span><h2 id="vTitle"></h2></div>
+    <div class="v-nav" id="vNav">
+      <button class="v-btn" id="vPrev" type="button" aria-label="Previous slide"><svg aria-hidden="true"><use href="#i-left"/></svg></button>
+      <span class="v-count" id="vCount" aria-live="polite"></span>
+      <button class="v-btn" id="vNext" type="button" aria-label="Next slide"><svg aria-hidden="true"><use href="#i-right"/></svg></button>
+    </div>
+    <div class="v-tools">
+      <button class="v-btn" id="vNotes" type="button" aria-pressed="false" title="Speaker notes (N)"><svg aria-hidden="true"><use href="#i-notes"/></svg><span class="lbl">Notes</span><span class="k">N</span></button>
+      <button class="v-btn" id="vTab" type="button" title="Open on its own in a new tab"><svg aria-hidden="true"><use href="#i-ext"/></svg><span class="lbl">New tab</span></button>
+      <button class="v-btn" id="vFull" type="button" title="Full screen (F)"><svg aria-hidden="true"><use href="#i-full"/></svg><span class="lbl">Full screen</span><span class="k">F</span></button>
+    </div>
+    <div class="v-run" id="vRun" hidden>
+      <span class="lbl" id="vRunPos"></span>
+      <button class="v-btn" id="vRunPrev" type="button" aria-label="Previous item in run-sheet"><svg aria-hidden="true"><use href="#i-left"/></svg></button>
+      <button class="v-btn" id="vRunNext" type="button"><span class="lbl">Next item</span><svg aria-hidden="true"><use href="#i-right"/></svg></button>
+    </div>
+  </div>
+  <div class="v-body">
+    <div class="v-stage" id="vStage">
+      <iframe id="vFrame" title="Presentation" allow="fullscreen; clipboard-write"></iframe>
+      <div class="v-launch" id="vLaunch" hidden></div>
+    </div>
+    <aside class="v-notes" id="vNotesPanel" aria-label="Speaker notes" hidden></aside>
+  </div>
+  <div class="v-strip" id="vStrip" aria-label="Slides"></div>
+</div>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden></aside>
+
+<dialog class="dialog" id="addDialog" aria-labelledby="addTitle">
+  <form method="dialog" id="addForm" novalidate>
+    <div class="drawer-body">
+      <h2 class="dialog-title" id="addTitle">Add a link</h2>
+      <p class="dialog-intro">For an MVP, a hosted deck or any page with a URL. It shows up right away on this browser; copy its registry entry from the details panel to make it permanent.</p>
+
+      <fieldset class="field">
+        <legend>What is it?</legend>
+        <div class="kind-pick">
+          <label><input type="radio" name="kind" value="mvp" checked>Product MVP<span>Opens in a new tab</span></label>
+          <label><input type="radio" name="kind" value="deck">Deck<span>Opens in the presenter</span></label>
+          <label><input type="radio" name="kind" value="doc">Document<span>Report, PDF, page</span></label>
+        </div>
+      </fieldset>
+      <div class="field">
+        <label for="fTitle">Title</label>
+        <input id="fTitle" name="title" required placeholder="e.g. Leave Balance Bot">
+      </div>
+      <div class="field">
+        <label for="fUrl">Link</label>
+        <input id="fUrl" name="url" required placeholder="https://… or library/mvps/my-app/index.html">
+        <span class="help">A web address, or a path inside this folder.</span>
+      </div>
+      <div class="field">
+        <label for="fProblem">Problem it solves</label>
+        <textarea id="fProblem" name="problem" placeholder="One sentence. This is what people search for."></textarea>
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label for="fSpace">Problem space</label>
+          <select id="fSpace" name="space"></select>
+        </div>
+        <div class="field">
+          <label for="fStatus">Status</label>
+          <select id="fStatus" name="status">
+            <option value="idea">Idea</option>
+            <option value="proposal">Proposal</option>
+            <option value="pilot">Pilot</option>
+            <option value="mvp" selected>MVP</option>
+            <option value="live">Live</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row" id="newSpaceRow" hidden>
+        <div class="field">
+          <label for="fSpaceName">New space name</label>
+          <input id="fSpaceName" name="spaceName" placeholder="e.g. Project delivery">
+        </div>
+        <div class="field">
+          <label for="fSpaceCode">Code</label>
+          <input id="fSpaceCode" name="spaceCode" maxlength="4" placeholder="e.g. PD">
+        </div>
+      </div>
+      <div class="field">
+        <label for="fTags">Keywords</label>
+        <input id="fTags" name="tags" placeholder="Comma separated: leave, HROne, chatbot">
+      </div>
+      <p class="form-error" id="formError" role="alert" hidden></p>
+    </div>
+    <div class="drawer-foot">
+      <button class="btn btn-primary" type="submit" value="save">Add to library</button>
+      <button class="btn btn-quiet" type="button" id="addCancel">Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="registry.js"></script>
+<script src="assets/hub.js"></script>
+</body>
+</html>

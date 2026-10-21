@@ -20,6 +20,10 @@ Static showcase hub for decks, product MVPs and documents, presented in meetings
 7. **Verify.** Run `node --check` on the edited JS, open the hub in headless Chrome, present the new item, and confirm there are no console errors.
 8. **Commit and push to `main`.** Message: what was added, e.g. `Add HR-002 Leave Balance Bot MVP`.
 
+## Deploys
+
+Vercel project `p-dash` (Hobby, owner GitHub account `mayank99deo`) serves https://p-dash-ruby.vercel.app and deploys every push to `main`. Hobby blocks deployments whose commit author isn't the owner, so commits must be authored as `mayank99deo` (this repo's local git config uses `309304990+mayank99deo@users.noreply.github.com`). Pushing itself authenticates as `mayank29deo`, a collaborator, which is fine. After pushing, fetch the live URL to confirm the change is there.
+
 ## Conventions
 
 - Design: light purple and white (Pinnacle), Archivo for the hub, drawing-register / title-block motif. Keep new UI consistent with `assets/hub.css` tokens.
